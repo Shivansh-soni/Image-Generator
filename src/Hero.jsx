@@ -36,7 +36,7 @@ function Hero() {
                 e.preventDefault();
 
                 const response = await fetch(
-                  "http://cute-cyan-adder.cyclic.app/openai/generateimage",
+                  "http://localhost:5000/openai/generateimage",
                   {
                     method: "POST",
                     headers: {
