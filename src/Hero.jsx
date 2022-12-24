@@ -51,6 +51,7 @@ function Hero() {
 
                 const data = await response.json();
                 console.log(data);
+                // eslint-disable-next-line
                 if (data.success == true) {
                   setImg(data.data);
                 } else {
