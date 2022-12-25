@@ -8,7 +8,6 @@ function Hero() {
   );
   const [loader, setLoader] = React.useState(false);
   const [visible, setVisible] = React.useState("none");
-
   return (
     <div
       style={{
@@ -32,61 +31,67 @@ function Hero() {
       >
         <div className="card lg:w-full lg:card-side bg-base-100 shadow-xl">
           <figure className="">
-            <img src={img} alt="Album" />
+            <img src={img} className="h-full " alt="Album" />
           </figure>
-          <div className="card-body flex flex-col gap-20 justify-center">
-            <h2 className="card-title text-2xl">AI based Image Generator</h2>
-            <input
-              type="text"
-              value={text}
-              onChange={(e) => {
-                setText(e.target.value);
-              }}
-              placeholder="Describe an Image"
-              className="input input-bordered w-full max-w-xs"
-            />
-            <div className="card-actions items-center justify-center">
-              <button
-                className="btn btn-primary "
-                onClick={async (e) => {
-                  e.preventDefault();
-                  setVisible("flex");
-                  setLoader(true);
-                  const response = await fetch(
-                    "https://cute-cyan-adder.cyclic.app/openai/generateimage",
-                    {
-                      method: "POST",
-                      headers: {
-                        "Content-Type": "application/json",
-                      },
-                      body: JSON.stringify({
-                        prompt: text,
-                        size: "medium",
-                      }),
-                    }
-                  );
+          <div className="card-body flex flex-col lg:gap-20 items-center lg:items-none gap:10 justify-center">
+            <h2 className="card-title text-xs lg:text-2xl ">
+              AI based Image Generator
+            </h2>
+            <form>
+              <input
+                type="text"
+                value={text}
+                onChange={(e) => {
+                  setText(e.target.value);
+                }}
+                placeholder="Describe an Image"
+                className="input input-bordered input-sm my-2 lg:my-0  lg:w-full max-w-xs "
+              />
+              <div className="card-actions items-center justify-center">
+                <button
+                  type="submit"
+                  className="btn btn-primary btn-sm md:btn-md  lg:my-10 my-5 "
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    setVisible("flex");
+                    setLoader(true);
+                    const response = await fetch(
+                      // "http://localhost:5000/openai/generateimage",
+                      "https://cute-cyan-adder.cyclic.app/openai/generateimage",
+                      {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                          prompt: text,
+                          size: "medium",
+                        }),
+                      }
+                    );
 
-                  const data = await response.json();
+                    const data = await response.json();
 
-                  console.log(data);
-                  // eslint-disable-next-line
-                  if (data.success == true) {
-                    setImg(data.data);
-                    setTimeout(() => {
+                    console.log(data);
+                    // eslint-disable-next-line
+                    if (data.success == true) {
+                      setImg(data.data);
+                      setTimeout(() => {
+                        setVisible("none");
+                        setLoader(false);
+                      }, 5000);
+                    } else {
+                      alert("Error! Please try again");
+                      setText("");
                       setVisible("none");
                       setLoader(false);
-                    }, 5000);
-                  } else {
-                    alert("Error! Please try again");
-                    setText("");
-                    setVisible("none");
-                    setLoader(false);
-                  }
-                }}
-              >
-                Listen
-              </button>
-            </div>
+                    }
+                  }}
+                >
+                  Generate
+                </button>
+              </div>
+            </form>
             <p className="text-xs text-center  font-rale font-bold">
               Made with ❤️ by SHIVANSH SONI
             </p>
