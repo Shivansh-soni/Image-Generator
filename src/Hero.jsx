@@ -45,7 +45,7 @@ function Hero() {
                   setText(e.target.value);
                 }}
                 placeholder="Describe an Image"
-                className="input input-bordered input-sm my-2 lg:my-0  lg:w-full max-w-xs "
+                className="input input-bordered input-sm md:input-md my-2  md:my-0  md:w-full max-w-xs "
               />
               <div className="card-actions items-center justify-center">
                 <button
